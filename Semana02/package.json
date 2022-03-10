@@ -1,0 +1,17 @@
+{
+  "name": "aula01",
+  "version": "0.0.0",
+  "description": "Introducao ao node e express",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js"
+  },
+  "author": "Vini",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
