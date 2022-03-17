@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include('includes/head') %>
+
+<body>
+
+    <nav>
+        <ul>
+            <li>Filmes</li>
+            <li>Cadastro</li>
+            <li>Contato</li>
+        </ul>
+    </nav>
+
+    <h1>Lista de todos os filmes</h1>
+
+    <ul>
+        <% for (let i=0; i < filmes.length ; i++) { %>
+            <li>
+                <a href="/filmes/<%= filmes[i].id %>">
+                    <%= filmes[i].nome %>
+                </a>
+            </li>
+            <% } %>
+    </ul>
+
+</body>
+
+</html>
