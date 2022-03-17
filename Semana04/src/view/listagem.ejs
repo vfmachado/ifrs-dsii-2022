@@ -5,26 +5,29 @@
 
 <body>
 
-    <nav>
-        <ul>
-            <li>Filmes</li>
-            <li>Cadastro</li>
-            <li>Contato</li>
-        </ul>
-    </nav>
+    <%- include('includes/navbar') %>    
 
     <h1>Lista de todos os filmes</h1>
 
-    <ul>
-        <% for (let i=0; i < filmes.length ; i++) { %>
-            <li>
-                <a href="/filmes/<%= filmes[i].id %>">
-                    <%= filmes[i].nome %>
-                </a>
-            </li>
-            <% } %>
-    </ul>
-
+    <table id="filmes">
+        <tr>
+          <th>ID</th>
+          <th>Nome</th>
+          <th></th>
+        </tr>
+        <tr>
+          <td>AAA</td>
+          <td>TESTE AAA</td>
+          <td>Ver detalhes</td>
+        </tr>
+        <% filmes.forEach(filme => { %>
+          <tr>
+            <td><%= filme.id %></td>
+            <td><%= filme.nome %></td>
+            <td> <a href="/filmes/<%= filme.id %>"> Ver detalhes </a> </td>
+          </tr>
+        <% }) %>
+    </table>
 </body>
 
 </html>

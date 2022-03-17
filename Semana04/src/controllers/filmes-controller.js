@@ -1,8 +1,12 @@
-const filmes = [];
+let filmes = [];
 
 const { nanoid } = require('nanoid');
 
 class FilmesController {
+
+    async mostraCadastro(req, res) {
+        return res.render('cadastrar');
+    }
 
     async listar(req, res) {
         // LISTAGEM DE TODOS OS FILMES MOSTRANDO O NOME
@@ -14,6 +18,20 @@ class FilmesController {
         
         // return res.send(html);
         return res.render('listagem', { filmes: filmes });
+    }
+
+    async deletar(req, res) {
+        const { id } = req.params;
+        // BUSCAR O FILME E REMOVER DO VETOR
+        const filmeIdx = filmes.findIndex(f => f.id == id);
+        filmes.splice(filmeIdx, 1);
+
+        // FILTRAR O VETOR DE FILMES BASEADO NO ID != DO ID DA REMOÇÃO
+        // filmes = filmes.filter(f => f.id != id);
+        
+        // BANCO - SQL COM DELETE WHERE
+
+        return res.redirect('/filmes')
     }
 
     async detalhar(req, res) {

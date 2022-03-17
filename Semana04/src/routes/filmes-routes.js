@@ -14,6 +14,10 @@ const routes = Router();
 
 const filmesController = new FilmesController();
 
+routes.get('/cadastrar', filmesController.mostraCadastro);
+
+routes.get('/deletar/:id', filmesController.deletar);
+
 routes.get('/', filmesController.listar);
 
 routes.get('/:id', filmesController.detalhar);
