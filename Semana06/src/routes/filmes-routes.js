@@ -22,6 +22,9 @@ routes.get('/', filmesController.listar);
 
 routes.get('/:id', filmesController.detalhar);
 
-routes.post('/', filmesController.cadastrar)
+routes.post('/', filmesController.cadastrar);
+
+routes.get('/alterar/:id', filmesController.mostraAlterar);
+routes.post('/alterar/:id', filmesController.alterar);
 
 module.exports = routes;

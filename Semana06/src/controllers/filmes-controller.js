@@ -10,6 +10,21 @@ class FilmesController {
         return res.render('cadastrar');
     }
 
+    async mostraAlterar(req, res) {
+        const { id } = req.params;
+        const filme = await FilmeDAO.buscaPeloId(id);
+        res.render('alterar-filme', { filme: filme })
+    }
+
+    async alterar(req, res) {
+        const { id } = req.params;
+        const { nome, genero, sinopse, lancamento} = req.body;
+        const filme = new Filme(id, nome, genero, sinopse, lancamento);
+        
+        const resultado = await FilmeDAO.atualiza(filme);
+        res.send("Chamei o alterar do controller e fui pro banco... resultado " + resultado);
+    }
+
     async listar(req, res) {
         console.log('PAGINA INICIAL');
         console.log({ session: req.session });
@@ -42,25 +57,9 @@ class FilmesController {
 
     async detalhar(req, res) {
         const { id } = req.params;
-        // for  / filter
-        for (let index = 0; index < filmes.length; index++) {
-            if (filmes[index].id == id) {
-                // retorna esse cara!
-            }
-        }
+        const filme = await FilmeDAO.buscaPeloId(id);
+        return res.render('detalhar', { filme: filme });
 
-        const filmeFiltrado = filmes.filter(f => f.id == id);
-        if (filmeFiltrado.length > 0) {
-            // return res.send(`<pre>
-            //     ${JSON.stringify(filmeFiltrado[0], null, 2)}
-            // </pre>`)
-            return res.render('detalhar', { filme: filmeFiltrado[0] });
-        } else {
-            return res.send('FILME NAO ENCONTRADO');
-        }
-
-        // MOSTRA TODOS OS DADOS DO FILME
-        //return res.send('Essa deveria detalhar um filme ' + req.params.id);
     }
 
     async cadastrar(req, res) {
@@ -68,11 +67,6 @@ class FilmesController {
         console.log(`Cadastrando um filme`);
         console.log({ body: req.body });
         
-        // filmes.push({
-        //     id: nanoid(8),
-        //     ...req.body
-        // });
-        // console.log(filmes)
         const { nome, genero, sinopse, lancamento} = req.body;
         
         const filme = new Filme(null, nome, genero, sinopse, lancamento);
