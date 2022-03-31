@@ -1,6 +1,8 @@
 let filmes = [];
 
 const { nanoid } = require('nanoid');
+const { dbcon } = require('../config/connection-db');
+const { Filme, FilmeDAO } = require('../models/filme');
 
 class FilmesController {
 
@@ -17,9 +19,11 @@ class FilmesController {
         // filmes.forEach(filme => {
         //     html += `<a href="/filmes/${filme.id}">${filme.nome}</a><br></br>`
         // })
-        
+        const result = await dbcon.query('SELECT * FROM filmes');
+        console.log({ result });
+
         // return res.send(html);
-        return res.render('listagem', { user: req.session.user, filmes: filmes });
+        return res.render('listagem', { user: req.session.user, filmes: result.rows });
     }
 
     async deletar(req, res) {
@@ -63,11 +67,17 @@ class FilmesController {
         //DEPOIS DE CADASTRAR, REDIRECIONA PARA A LISTAGEM
         console.log(`Cadastrando um filme`);
         console.log({ body: req.body });
-        filmes.push({
-            id: nanoid(8),
-            ...req.body
-        });
-        console.log(filmes)
+        
+        // filmes.push({
+        //     id: nanoid(8),
+        //     ...req.body
+        // });
+        // console.log(filmes)
+        const { nome, genero, sinopse, lancamento} = req.body;
+        
+        const filme = new Filme(null, nome, genero, sinopse, lancamento);
+        await FilmeDAO.cadastrar(filme);
+        
         return res.redirect('/filmes');
         // return res.send('Deveria cadastrar um filme');
     }

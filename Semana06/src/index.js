@@ -54,4 +54,7 @@ app.use('*', (req, res) => {
     `);
 })
 
+const dbcon = require('./config/connection-db');
+console.log(dbcon);
+
 app.listen(3000, () => console.log('Server iniciado na porta 3000'));
