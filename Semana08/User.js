@@ -9,8 +9,5 @@ User.init({
   birthday: DataTypes.DATE
 }, { sequelize, modelName: 'user' });
 
-(async () => {
-    await sequelize.sync();
-})();
 
 module.exports = { User };
