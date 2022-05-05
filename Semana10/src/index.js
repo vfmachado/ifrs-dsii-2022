@@ -12,10 +12,21 @@ app.use(express.static('public'));
 
 // PAGINA INICIAL
 app.get('/', async (req, res) => {
+    let { page } = req.query;
+    console.log({ page });
+    /*
+    if (!page) {
+        page = 1
+    }
+    */
+    page = page || 1;
+    const limit = 5;
+    const offset = limit * (page - 1);
 
-    const images = await Image.findAll();
-    console.log({ quantImages: images.length });
-    res.render('initial', { images: images});
+    const images = await Image.findAll({ offset, limit });
+    const total = await Image.count();
+    
+    res.render('initial', { images: images, total, page});
 });
 
 // PUBLICAR NOVA FOTO
